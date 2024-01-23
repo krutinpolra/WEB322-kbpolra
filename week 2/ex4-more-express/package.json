@@ -1,0 +1,19 @@
+{
+  "name": "ex4-more-express",
+  "version": "1.0.0",
+  "description": "This will demonstrate more about express.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "advanced",
+    "features"
+  ],
+  "author": "Nick Romanidis",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
