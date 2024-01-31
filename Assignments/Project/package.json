@@ -1,0 +1,21 @@
+{
+  "name": "culinaryparcel",
+  "version": "1.0.0",
+  "description": "a meal delivery company that creates recipes and delivers the ingredients straight to your door",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "javascript",
+    "express",
+    "node"
+  ],
+  "author": "krutin bharatbhai polra",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

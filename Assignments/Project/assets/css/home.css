@@ -1,0 +1,61 @@
+body{
+    background-image: url('/images/background-image.jpg');
+    background-size: cover;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    background-color: bisque;
+    color: black;
+    margin: -10px -10px 20px -10px;
+}
+
+nav img.Logo {
+    display: block;
+    float: left;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+nav button:hover {
+    background-color: #ddd;
+    color: #333;
+}
+
+button{
+    color: #ddd;
+    background-color: #444;
+    border: none;
+    padding: 14px 46px;
+    border-radius: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 12px 60px 12px 60px;
+    margin: 12px;
+}
+
+button.Sign-up{
+    position: relative;
+    background-color:darkorange;
+    z-index: 5;
+}
+
+button.Log-in{
+    position: relative;
+    background-color: #04AA6D;
+    z-index: 4;
+}
+
+div img.herofont{
+    width: 100px;
+    height: 100px;
+}
