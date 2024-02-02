@@ -41,7 +41,7 @@ app.get("/about", (req, res) => {
     res.send("This is about page");
 });
 
-app.get("/contact", (req, res) => {
+app.get("/contacts", (req, res) => {
     res.send("This is contact page");
 });
 
