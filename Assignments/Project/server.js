@@ -41,12 +41,8 @@ app.get("/about", (req, res) => {
     res.send("This is about page");
 });
 
-app.get("/contacts", (req, res) => {
-    res.send("This is contact page");
-});
-
-app.get("/deals", (req, res) => {
-    res.send("This is deals page");
+app.get("/meal-kits", (req, res) => {
+    res.send("This is meal kits page");
 });
 
 app.get("/headers", (req, res) => {
