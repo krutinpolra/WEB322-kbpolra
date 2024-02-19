@@ -63,7 +63,7 @@ body{
     background-image: url(/images/backgroundImage.jpg);
     background-size: cover;
     background-position: center;
-    height: 86vh;
+    height: 91vh;
     margin-top: 0;
     border-radius: 12px;
     padding-top: 107px;
@@ -133,6 +133,45 @@ img {
 }
 
 
+.Content-section{
+  padding-bottom: 60px;
+}
+/* how it works link and button*/
+.How-It-Works{
+  font-family: "Protest Revolution", sans-serif;
+  text-align: center;
+  padding: 15px 0px 0px 0px;
+  margin: 15px 0px 0px 0px;
+}
+.How-It-Works_btn{
+  text-align: center;
+  padding: 0px 0px 15px 0px;
+}
+.How-It-Works_Btn {
+  padding: 10px 20px;
+  border: none;
+  font-size: 17px;
+  color: #fff;
+  border-radius: 7px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.5s;
+  transition-property: box-shadow;
+}
+
+.How-It-Works_Btn {
+  background: rgb(0,140,255);
+  box-shadow: 0 0 25px rgb(0,140,255);
+}
+
+.How-It-Works_Btn:hover {
+  box-shadow: 0 0 5px rgb(0,140,255),
+              0 0 25px rgb(0,140,255),
+              0 0 50px rgb(0,140,255),
+              0 0 100px rgb(0,140,255);
+}
+
 .container{
     padding: 12px;
 }
@@ -177,3 +216,13 @@ img {
   .card:active {
     transform: scale(0.95) rotateZ(1.7deg);
   }
+
+  /*carousel*/
+  .Meal-kits {
+    padding: 20px 75px 0px 75px;
+  }
+  
+  .carousel-inner .carousel-item img {
+    height: 85vh; /* Set the height of carousel inner items to 65% */
+  }
+  

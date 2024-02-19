@@ -101,14 +101,14 @@
         </section>
     
         <section class="Content-section">
-            <div>
+            <div class="How-It-Works">
                 <h2>HOW IT WORKS</h2>
             </div>
     
-            <div>
-                <a href="/videos/how-it-works.mp4" class="how-it-works-video">
-                    HOW IT WORKS?
-                </a>
+            <div class="How-It-Works_btn">
+                <button class="How-It-Works_Btn" onclick="window.location.href='/videos/how-it-works.mp4'">
+                    How-It-Works
+                </button>
             </div>
 
             <div class="container">
@@ -173,36 +173,51 @@
         </section>
 
         <section class="Meal-kits">
-
-            <div class="Card">
-                <img src="" alt="Breakfast">
-                <div class="card-details">
-                    <h3>Morning Glory Medley</h3>
-                    <p>A hearty meal with eggs, bacon, sausage, grilled tomatoes, mushrooms, baked beans, and toast.</p>
-                    <p class="price">$19.99</p>
+            
+            <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
-            </div>
-
-            <div class="Card">
-                <img src="" alt="Lunch">
-                <div class="card-details">
-                    <h3>Culinary Noon Delights</h3>
-                    <p>Culinary Noon Delights invites you to indulge in a midday culinary extravaganza, 
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="10000">
+                    <img src="/images/BreakFast.jpg" class="d-block w-100" alt="BreakFast">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Morning Glory Medley</h5>
+                        <p>A hearty meal with eggs, bacon, sausage, grilled tomatoes, mushrooms, baked beans, and toast.</p>
+                        <p class="price">$19.99</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="2000">
+                    <img src="/images/Lunch.jpg" class="d-block w-100" alt="Lunch">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Culinary Noon Delights</h5>
+                        <p>Culinary Noon Delights invites you to indulge in a midday culinary extravaganza, 
                         where flavors dance under the sun, creating a delightful symphony of taste and texture.</p>
-                    <p class="price">$19.99</p>
+                        <p class="price">$19.99</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/images/Dinner.jpg" class="d-block w-100" alt="Dinner">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Flamboyant Feast</h5>
+                        <p>At Flamboyant Feast, immerse yourself in an opulent dining experience where
+                        each dish is a vibrant masterpiece, showcasing the artistry of flavors 
+                        and the grandeur of gastronomy</p>
+                        <p class="price">$19.99</p>
+                    </div>
+                  </div>
                 </div>
-            </div>
-
-            <div class="Card">
-                <img src="" alt="Dinner">
-                <div class="card-details">
-                    <h3>Flamboyant Feast</h3>
-                    <p>At Flamboyant Feast, immerse yourself in an opulent dining experience where
-                       each dish is a vibrant masterpiece, showcasing the artistry of flavors 
-                       and the grandeur of gastronomy</p>
-                    <p class="price">$19.99</p>
-                </div>
-            </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
         </section>
 
         <footer>
