@@ -1,0 +1,38 @@
+<!-- Render meal kit cards by category with flip card structure -->
+<section class="Meal-kits">
+    <% categories.forEach(category => { %>
+        <div class="container">
+            <h2 class="categoryName text-center mb-4 display-4"><%= category.categoryName %></h2>
+            <div class="row justify-content-center"> <!-- Center align the row -->
+                <div class="col-12 col-md-10"> <!-- Adjusted column size -->
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4 justify-content-center"> <!-- Center align and add space around the cards -->
+                        <% category.mealKits.forEach(mealKit => { %>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
+                                <div class="flip-card p-8">
+                                    <div class="flip-card-inner">
+                                        <div class="flip-card-front">
+                                            <img src="<%= mealKit.imageUrl %>" class="card-img-top" alt="<%= mealKit.title %>">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><%= mealKit.title %></h5>
+                                                <p class="price">$<%= mealKit.price.toFixed(2) %></p>
+                                                <p class="includes"><strong>Includes:</strong> <%= mealKit.includes %></p>
+                                                <p class="cookingTime"><strong>Cooking Time:</strong> <%= mealKit.cookingTime %> minutes</p>
+                                                <p class="servings"><strong>Servings:</strong> <%= mealKit.servings %></p>
+                                            </div>
+                                        </div>
+                                        <div class="flip-card-back">
+                                            <div class="card-body">
+                                                <p class="card-description"><%= mealKit.description %></p>
+                                                <p class="category">Category: <%= mealKit.category %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+</section>
