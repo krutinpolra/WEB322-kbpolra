@@ -1,0 +1,529 @@
+body{
+    background-color: darkolivegreen;
+}
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+}
+.navbar>.container, .navbar>.container-fluid, .navbar>.container-lg, .navbar>.container-md, .navbar>.container-sm, .navbar>.container-xl, .navbar>.container-xxl {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+/*CSS for buttons in navigation bar*/
+/* === removing default button style ===*/
+.button {
+    margin: 0;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* button styling */
+  .button {
+    --border-right: 6px;
+    --text-stroke-color: rgba(0, 0, 0, 0.6);
+    --animation-color: rgba(85, 107, 47);
+    --fs-size: 2em;
+    letter-spacing: 3px;
+    text-decoration: none;
+    font-size: var(--fs-size);
+    font-family: "Arial";
+    position: relative;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-stroke-color);
+  }
+  /* this is the text, when you hover on button */
+  .hover-text {
+    position: absolute;
+    box-sizing: border-box;
+    content: attr(data-text);
+    color: var(--animation-color);
+    width: 0%;
+    inset: 0;
+    border-right: var(--border-right) solid var(--animation-color);
+    overflow: hidden;
+    transition: 0.5s;
+    -webkit-text-stroke: 1px var(--animation-color);
+  }
+  /* hover */
+  .button:hover .hover-text {
+    width: 100%;
+    filter: drop-shadow(0 0 23px var(--animation-color))
+  }
+
+/*CSS for search bar*/
+.form-control {
+ background-color: #383838;
+ border: 1ex solid none;
+ border-top-width: 1.7em;
+ margin: 0;
+ margin-top: 0.5rem;
+ padding: 0;
+ color: #383838;
+ word-wrap: break-word;
+ outline: 7px solid #383838;
+ height: 30px;
+ font-size: 17px;
+ text-align: center;
+ transition: all 1s;
+ max-width: 190px;
+ font-weight: bold;
+ font-family: 'Courier New', Courier, monospace;
+}
+
+.form-control:hover {
+ border-top-width: 0.2em;
+ background-color: #f1e8e8;
+}
+
+.form-control:focus {
+ border-top-width: 0.2em;
+ background-color: #f1e8e8;
+}
+
+.Hero-section {
+  background-image: url(/images/backgroundImage.jpg);
+  background-size: cover;
+  background-position: center;
+  height: auto; /* Remove fixed height */
+  padding-top: 50px; /* Adjust padding as needed */
+  padding-bottom: 50px; /* Adjust padding as needed */
+}
+
+.MainLogo img {
+  height: auto; /* Use auto height */
+  width: 100px; /* Adjust width as needed */
+  border-radius: 50%;
+}
+
+.Name {
+  font-family: "Protest Revolution", sans-serif;
+  font-size: 36px; /* Adjust font size as needed */
+  font-weight: 500;
+}
+
+.Company-tagline {
+  font-weight: 500;
+  font-family: "Protest Revolution", sans-serif;
+  font-size: 24px; /* Adjust font size as needed */
+}
+
+
+
+.Content-section{
+  padding-bottom: 60px;
+}
+/* how it works link and button*/
+.How-It-Works{
+  font-family: "Protest Revolution", sans-serif;
+  text-align: center;
+  padding: 15px 0px 0px 0px;
+  margin: 15px 0px 0px 0px;
+}
+.How-It-Works_btn{
+  text-align: center;
+  padding: 0px 0px 15px 0px;
+}
+.How-It-Works_Btn {
+  padding: 10px 20px;
+  border: none;
+  font-size: 17px;
+  color: #fff;
+  border-radius: 7px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.5s;
+  transition-property: box-shadow;
+}
+
+.How-It-Works_Btn {
+  background: rgb(0,140,255);
+  box-shadow: 0 0 25px rgb(0,140,255);
+}
+
+.How-It-Works_Btn:hover {
+  box-shadow: 0 0 5px rgb(0,140,255),
+              0 0 25px rgb(0,140,255),
+              0 0 50px rgb(0,140,255),
+              0 0 100px rgb(0,140,255);
+}
+
+.container{
+    padding: 12px;
+}
+
+.card-img, .card-img-bottom, .card-img-top {
+    width: 100%;
+    display: block;
+    border-radius: 72%;
+}
+
+.row{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/*CSS for cards*/
+.card {
+    box-sizing: border-box;
+    width: 190px;
+    height: 254px;
+    background: rgba(217, 217, 217, 0.58);
+    border: 1px solid white;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-weight: bolder;
+    color: black;
+  }
+  
+  .card:hover {
+    border: 1px solid black;
+    transform: scale(1.05);
+  }
+  
+  .card:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+  }
+
+  /*carousel*/
+  .Meal-kits {
+    padding: 20px 75px 30px 75px;
+  }
+  
+  .carousel-inner .carousel-item img {
+    height: 50vh; /* Set the height of carousel inner items to 65% */
+  }
+  
+  .link-as-text{
+    color: inherit; /* Inherit text color from parent */
+    text-decoration: none; /* Remove underline */
+    cursor: auto; /* Remove link cursor */
+  }
+
+  .card-title{
+
+    font-family: "Protest Revolution";
+  }
+
+  /* CSS for Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 30px 0;
+  margin-top: 40px;
+}
+
+.footer-section h3 {
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.footer-section ul {
+  padding: 0;
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #fff;
+}
+
+.footer-section.social a {
+  font-size: 24px;
+  margin-right: 10px;
+  color: #fff;
+}
+
+.footer-bottom {
+  background-color: #222;
+  padding: 10px 0;
+  text-align: center;
+}
+
+/* for all social containers*/
+
+.socials{
+  display: flex;
+  justify-content: center;
+}
+.socialContainer {
+  width: 52px;
+  height: 52px;
+  background-color: rgb(44, 44, 44);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition-duration: .3s;
+}
+/* instagram*/
+.containerOne:hover {
+  background-color: #d62976;
+  transition-duration: .3s;
+}
+/* twitter*/
+.containerTwo:hover {
+  background-color: #00acee;
+  transition-duration: .3s;
+}
+/* linkdin*/
+.containerThree:hover {
+  background-color: #0072b1;
+  transition-duration: .3s;
+}
+/* gitHub*/
+.containerFour:hover {
+  background-color: #24292e;
+  transition-duration: .3s;
+}
+
+.socialContainer:active {
+  transform: scale(0.9);
+  transition-duration: .3s;
+}
+
+.socialSvg {
+  width: 17px;
+}
+
+.socialSvg path {
+  fill: rgb(255, 255, 255);
+}
+
+.socialContainer:hover .socialSvg {
+  animation: slide-in-top 0.3s both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+/*Menu cards*/
+.categoryName{
+  font-family: Protest Revolution;
+}
+
+.card-title {
+  padding: 25px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card-description{
+
+  font-size:large;
+  padding: 10px;
+}
+
+.category{
+
+  font-size: large;
+  padding: 13px;
+}
+.card-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #00b894;
+  margin-top: 10px;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 360px;
+  height: 500px;
+  perspective: 1000px;
+  margin: auto;
+  font-family: sans-serif;
+}
+
+.title {
+  font-size: 1.5em;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid coral;
+  border-radius: 1rem;
+}
+
+.flip-card-front {
+  background: linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%,
+     rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%);
+  color: coral;
+}
+
+.flip-card-back {
+  background: linear-gradient(120deg, rgb(255, 174, 145) 30%, coral 88%,
+     bisque 40%, rgb(255, 185, 160) 78%);
+  color: white;
+  transform: rotateY(180deg);
+}
+
+/*sign-up*/
+.sign-up-container {
+  display: flex;
+  align-items: center;
+  padding: 50px;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.form_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #3d3b3b;
+  height: auto;
+  width: auto;
+  border: 2px solid #264143;
+  border-radius: 20px;
+  box-shadow: 3px 4px 0px 1px #E99F4C;
+}
+
+.title {
+  color: #fefefe;
+  font-weight: 900;
+  font-size: 1.5em;
+  margin-top: 20px;
+}
+
+.sub_title {
+  font-weight: 600;
+  color: white;
+  margin: 5px 0;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin: 10px;
+}
+
+.form_style {
+  outline: none;
+  border: 2px solid #264143;
+  box-shadow: 3px 4px 0px 1px #E99F4C;
+  width: 95%;
+  padding: 12px 10px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.form_style:focus, .btn:focus {
+  transform: translateY(4px);
+  box-shadow: 1px 2px 0px 0px #E99F4C;
+}
+
+.sign-up-btn {
+  padding: 15px;
+  margin: 25px 0px;
+  width: 60%;
+  font-size: 15px;
+  border-radius: 10px;
+  font-weight: 800;
+  background-color: white;
+  box-shadow: 3px 3px 0px 0px #E99F4C;
+}
+
+.btn:hover {
+  opacity: .9;
+}
+
+.link {
+  font-weight: 800;
+  color: #ffffff;
+  padding: 5px;
+}
+
+/*about us page*/
+.about-us-container {
+  margin-top: 50px;
+}
+.jumbotron {
+  background-color: #333;
+  color: #ffffff;
+}
+.team-member {
+  text-align: center;
+  color: white;
+}
+.team-member img {
+  border-radius: 50%;
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+.about-us-container {
+  border: 1px solid black;
+  width: 50%;
+  margin: auto;
+  margin-top: 50px;
+  background-color: #333;
+}
+
+.jumbotron{
+  color: white;
+  text-align: center;
+}
