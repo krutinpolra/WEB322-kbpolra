@@ -13,6 +13,14 @@
 const path = require("path");
 const express = require("express");
 const app = express();
+const expressLayouts = require('express-ejs-layouts');
+const mealKitUtil = require('./modules/mealkit-util');
+
+
+//set up EJS
+app.set("view engine", "ejs");
+app.set("layout", "layouts/main");
+app.use(expressLayouts);
 
 //Make the "assets" folder public (aka static)
 app.use(express.static(path.join(__dirname, "/assets")));
@@ -21,28 +29,33 @@ app.use(express.static(path.join(__dirname, "/assets")));
 // e.g. app.get() { ... }
 
 app.get("/", (req, res) => {
-
-        res.sendFile(path.join(__dirname, "./views/home.html"));
+    // Retrieve all meal kits
+    const mealKits = mealKitUtil.getAllMealKits();
+    // Pass meal kits data to the template
+    res.render("home", { mealKits: mealKits });
 });
 
 app.get("/on-the-menu", (req, res) => {
-    res.send("this is on-the-menu page");
+        // Retrieve meal kits by category
+        const mealKitsByCategory = mealKitUtil.getMealKitsByCategory(mealKitUtil.getAllMealKits());
+        // Pass meal kits by category data to the template
+        res.render("on-the-menu", { categories: mealKitsByCategory });
 });
 
 app.get("/sign-up", (req, res) => {
-    res.send("this is sign up page");
+    res.render("sign-up");
 });
 
 app.get("/log-in", (req, res) => {
-    res.send("this is log in page");
+    res.render("log-in");
 });
 
 app.get("/about", (req, res) => {
-    res.send("This is about page");
+    res.render("about");
 });
 
 app.get("/meal-kits", (req, res) => {
-    res.send("This is meal kits page");
+    res.render("meal-kits");
 });
 
 app.get("/headers", (req, res) => {
