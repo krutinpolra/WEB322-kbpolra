@@ -1,18 +1,27 @@
 <div class="sign-up-container">
     <div class="form_area col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
         <p class="title">SIGN UP</p>
-        <form action="">
+        <form action="/sign-up" method="POST">
             <div class="form_group">
-                <label class="sub_title" for="name" required>Name</label>
-                <input placeholder="Enter your full name" class="form_style" type="text">
+                <label class="sub_title" for="name">Name</label>
+                <input placeholder="Enter your full name" id="name" name="firstName" class="form_style" type="text" value="<%= typeof firstName !== 'undefined' ? firstName : '' %>">
+                <% if (errors && errors.firstName) { %>
+                    <p class="error" style="color:aliceblue"><%= errors.firstName %></p>
+                <% } %>
             </div>
             <div class="form_group">
-                <label class="sub_title" for="email" required>Email</label>
-                <input placeholder="Enter your email" id="email" class="form_style" type="email">
+                <label class="sub_title" for="email">Email</label>
+                <input placeholder="Enter your email" id="email" name="email" class="form_style" type="text" value="<%= typeof email !== 'undefined' ? email : '' %>">
+                <% if (errors && errors.email) { %>
+                    <p class="error" style="color:aliceblue"><%= errors.email %></p>
+                <% } %>
             </div>
             <div class="form_group">
-                <label class="sub_title" for="password" required>Password</label>
-                <input placeholder="Enter your password" id="password" class="form_style" type="password">
+                <label class="sub_title" for="password">Password</label>
+                <input placeholder="Enter your password" id="password" name="password" class="form_style" type="password">
+                <% if (errors && errors.password) { %>
+                    <p class="error" style="color:aliceblue"><%= errors.password %></p>
+                <% } %>
             </div>
             <div>
                 <button class="sign-up-btn">SIGN UP</button>
