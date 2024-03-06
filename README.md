@@ -1,2 +1,2 @@
-# WEB-322
-this is all the web development assignment work that has been done throughout the semester using HTML, CSS, JAVASCRIPT, EXPRESS, NODE JS
+WEB 322
+The project is a web application for a meal kit service, allowing users to browse meal kits, sign up, log in, and explore various features related to meal kits. Below are the main components and features of the project:
