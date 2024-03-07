@@ -10,4 +10,4 @@ Course/Section: WEB322/NEE
 
 ## Project URLs
 GitHub Repo   : https://github.com/<repo_name>/
-Cyclic URL    : https://<app_name>.cyclic.app/
+Cyclic URL    : https://fair-cyan-tick-wrap.cyclic.app
