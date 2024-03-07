@@ -148,7 +148,7 @@ app.post("/log-in", (req, res) => {
         // Send welcome email to the user
         const msg = {
             to: email,
-            from: "kbpolra@myseneca.ca",
+            from: process.env.SENDER_EMAIL,
             subject: 'Welcome back to Our Website!',
             text: `Hello ${firstName},\n\nWelcome back to our website! We're glad you signed up.`,
         };
