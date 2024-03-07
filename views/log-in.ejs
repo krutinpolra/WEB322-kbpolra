@@ -1,7 +1,7 @@
 <div class="sign-up-container">
     <div class="form_area col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
         <p class="title">LOG IN</p>
-        <form action="/login" method="POST"> <!-- Update action to point to login route -->
+        <form action="/log-in" method="POST"> <!-- Update action to point to log-in route -->
             <div class="form_group">
                 <label class="sub_title" for="email">Email</label>
                 <input placeholder="Enter your email" id="email" name="email" class="form_style" type="text">
@@ -11,7 +11,7 @@
             </div>
             <div class="form_group">
                 <label class="sub_title" for="password">Password</label>
-                <input placeholder="Enter your password" id="password" name="password" class="form_style" type="password">
+                <input placeholder="Enter your password" id="password" name="password" class="form_style" type="text">
                 <% if (errors && errors.password) { %>
                     <p class="error" style="color:aliceblue"><%= errors.password %></p>
                 <% } %>

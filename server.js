@@ -115,7 +115,58 @@ app.get("/welcome", (req, res)=>{
 
 
 app.get("/log-in", (req, res) => {
-    res.render("log-in");
+    res.render("log-in", {
+        title: "log-in",
+        errors: {}
+    });
+});
+
+// POST route for log-in form submission
+app.post("/log-in", (req, res) => {
+    const { email, password } = req.body;
+    const errors = {};
+
+    // Email validation with regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        errors.email = "Invalid email address. Please enter valid email";
+    }
+
+    // Password validation with regular expression
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+    if (!password || !passwordRegex.test(password)) {
+        errors.password = "Password must be 8-12 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one symbol.";
+    }
+
+    // If there are validation errors, render the sign-up page with errors
+    if (Object.keys(errors).length > 0) {
+        res.render("log-in", { errors, email }); // Pass submitted data back to the form
+    } else {
+        // No validation errors, proceed with sign-up process
+        const sgMail = require("@sendgrid/mail")
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY)
+        // Send welcome email to the user
+        const msg = {
+            to: email,
+            from: "kbpolra@myseneca.ca",
+            subject: 'Welcome back to Our Website!',
+            text: `Hello ${firstName},\n\nWelcome back to our website! We're glad you signed up.`,
+        };
+     
+        sgMail.send(msg)
+            .then(() => {
+                // Redirect to welcome page
+                res.redirect("/");
+            })
+            .catch((error) => {
+                console.error(error);
+                res.status(500).send("Internal server error");
+                res.render("log-in", {
+                    title: "log-in",
+                    errors: {}
+                });
+            });
+    }
 });
 
 app.get("/about", (req, res) => {
