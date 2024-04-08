@@ -1,12 +1,24 @@
 <div class="sign-up-container">
     <div class="form_area col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
         <p class="title">SIGN UP</p>
-        <form action="/sign-up" method="POST">
+        <% if (errors.sendGrid) { %>
+            <div class="alert alert-danger text-center" role="alert">
+              <%= errors.sendGrid %>
+            </div>
+          <% } %>
+            <form action="/sign-up" method="POST">
             <div class="form_group">
-                <label class="sub_title" for="name">Name</label>
-                <input placeholder="Enter your full name" id="name" name="firstName" class="form_style" type="text" value="<%= typeof firstName !== 'undefined' ? firstName : '' %>">
+                <label class="sub_title" for="firstName">First Name</label>
+                <input placeholder="Enter your first name" id="firstName" name="firstName" class="form_style" type="text" value="<%= typeof firstName !== 'undefined' ? firstName : '' %>">
                 <% if (errors && errors.firstName) { %>
                     <p class="error" style="color:aliceblue"><%= errors.firstName %></p>
+                <% } %>
+            </div>
+            <div class="form_group">
+                <label class="sub_title" for="lastName">Last Name</label>
+                <input placeholder="Enter your Last name" id="lastName" name="lastName" class="form_style" type="text" value="<%= typeof lastName !== 'undefined' ? lastName : '' %>">
+                <% if (errors && errors.lastName) { %>
+                    <p class="error" style="color:aliceblue"><%= errors.lastName %></p>
                 <% } %>
             </div>
             <div class="form_group">
@@ -14,6 +26,9 @@
                 <input placeholder="Enter your email" id="email" name="email" class="form_style" type="text" value="<%= typeof email !== 'undefined' ? email : '' %>">
                 <% if (errors && errors.email) { %>
                     <p class="error" style="color:aliceblue"><%= errors.email %></p>
+                <% } %>
+                <% if (errors && errors.emailExists) { %>
+                    <p class="error" style="color:aliceblue"><%= errors.emailExists %></p>
                 <% } %>
             </div>
             <div class="form_group">

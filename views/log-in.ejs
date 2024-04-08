@@ -1,7 +1,12 @@
 <div class="sign-up-container">
     <div class="form_area col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
         <p class="title">LOG IN</p>
-        <form action="/log-in" method="POST"> <!-- Update action to point to log-in route -->
+        <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+            <% errors.forEach(err => { %>
+                <p style="color: white;"><%= err %></p>
+            <% }) %>
+        <% } %>
+        <form action="/log-in" method="POST">
             <div class="form_group">
                 <label class="sub_title" for="email">Email</label>
                 <input placeholder="Enter your email" id="email" name="email" class="form_style" type="text">
@@ -11,14 +16,22 @@
             </div>
             <div class="form_group">
                 <label class="sub_title" for="password">Password</label>
-                <input placeholder="Enter your password" id="password" name="password" class="form_style" type="text">
+                <input placeholder="Enter your password" id="password" name="password" class="form_style" type="password">
                 <% if (errors && errors.password) { %>
                     <p class="error" style="color:aliceblue"><%= errors.password %></p>
                 <% } %>
             </div>
+            <div class="form_group">
+                <label class="sub_title">Select Role:</label>
+                <div class="role-options">
+                    <input type="radio"  id="data-entry" name="role" value="data entry clerk" checked>
+                    <label for="data-entry" style="color:aliceblue">Data Entry Clerk</label>
+                    <input type="radio"  id="customer" name="role" value="customer">
+                    <label for="customer" style="color:aliceblue" >Customer</label>
+                </div>
+            </div>
             <div>
-                <button class="sign-up-btn">Log IN</button>
-                <p><a class="link" href="/forgot-password">Forgot password?</a></p> <!-- Update href to point to forgot-password route -->
+                <button class="sign-up-btn">Log In</button>
             </div>
         </form>
     </div>

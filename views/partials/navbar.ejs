@@ -44,20 +44,29 @@
                             <span aria-hidden="true" class="hover-text">&nbsp;About&nbsp;</span>
                         </button>
                     </li>
-
-                    <li class="nav-item">
-                        <button class="button" data-text="Awesome" onclick="window.location.href='/log-in'">
-                            <span class="actual-text">&nbsp;LogIn&nbsp;</span>
-                            <span aria-hidden="true" class="hover-text">&nbsp;LogIn&nbsp;</span>
-                        </button>
-                    </li>
-
-                    <li class="nav-item">
-                        <button class="button" data-text="Awesome" onclick="window.location.href='/sign-up'">
-                            <span class="actual-text">&nbsp;SignUp&nbsp;</span>
-                            <span aria-hidden="true" class="hover-text">&nbsp;SignUp&nbsp;</span>
-                        </button>
-                    </li>
+                    <% if (typeof user === "undefined") { %>
+                        <li class="nav-item">
+                            <button class="button" data-text="Awesome" onclick="window.location.href='/log-in'">
+                                <span class="actual-text">&nbsp;LogIn&nbsp;</span>
+                                <span aria-hidden="true" class="hover-text">&nbsp;LogIn&nbsp;</span>
+                            </button>
+                        </li>
+    
+                        <li class="nav-item">
+                            <button class="button" data-text="Awesome" onclick="window.location.href='/sign-up'">
+                                <span class="actual-text">&nbsp;SignUp&nbsp;</span>
+                                <span aria-hidden="true" class="hover-text">&nbsp;SignUp&nbsp;</span>
+                            </button>
+                        </li>
+                    <% } else { %>
+                        <li>Hello <%= user.firstName %></li>
+                        <li class="nav-item">
+                            <button class="button" data-text="Awesome" onclick="window.location.href='/log-out'">
+                                <span class="actual-text">&nbsp;LogOut&nbsp;</span>
+                                <span aria-hidden="true" class="hover-text">&nbsp;LogOut&nbsp;</span>
+                            </button>
+                        </li>
+                    <% } %>
                 </ul>
 
                 <form class="d-flex" role="search">
