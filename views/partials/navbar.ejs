@@ -31,7 +31,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               
                     <li class="nav-item">
-                        <button class="button" data-text="Awesome" onclick="window.location.href='/on-the-menu'">
+                        <button class="button" data-text="Awesome" onclick="window.location.href='/mealKitsController/'">
                             <span class="actual-text">&nbsp;Menu&nbsp;</span>
                             <span aria-hidden="true" class="hover-text">&nbsp;Menu&nbsp;</span>
                         </button>
@@ -59,7 +59,19 @@
                             </button>
                         </li>
                     <% } else { %>
-                        <li>Hello <%= user.firstName %></li>
+                        <li class="nav-item">
+                            <% if (locals.role === "Data Entry Clerk") { %>
+                                <button class="button" data-text="Awesome" onclick="window.location.href='/mealKits/list'">
+                                    <span class="actual-text">&nbsp;<%= user.firstName %>&nbsp;</span>
+                                    <span aria-hidden="true" class="hover-text">&nbsp;<%= user.firstName %>&nbsp;</span>
+                                </button>
+                            <% } else {%>
+                            <button class="button" data-text="Awesome" onclick="window.location.href='/cart'">
+                                <span class="actual-text">&nbsp;<%= user.firstName %>&nbsp;</span>
+                                <span aria-hidden="true" class="hover-text">&nbsp;<%= user.firstName %>&nbsp;</span>
+                            </button>
+                            <% } %>
+                        </li>
                         <li class="nav-item">
                             <button class="button" data-text="Awesome" onclick="window.location.href='/log-out'">
                                 <span class="actual-text">&nbsp;LogOut&nbsp;</span>

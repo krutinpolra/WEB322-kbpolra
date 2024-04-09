@@ -1,0 +1,63 @@
+<section class="edit-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="edit-card">
+                    <div class="edit-card-header">
+                        <h2 class="text-center">Update Meal Kit</h2>
+                    </div>
+                    <div class="edit-card-body">
+                        <form method="post" action="/mealKits/edit/<%= mealKit._id %>" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Meal Kit Title*</label>
+                                <input type="text" id="title" name="title" class="form-control" value="<%= mealKit.title %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="includes" class="form-label">What does it include?*</label>
+                                <input type="text" id="includes" name="includes" class="form-control" value="<%= mealKit.includes %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description of your meal kit*</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" required><%= mealKit.description %></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category*</label>
+                                <input type="text" id="category" name="category" class="form-control" list="categorySuggestions" value="<%= mealKit.category %>" autocomplete="off" required>
+                                <datalist id="categorySuggestions">
+                                    <option value="Vegan Meals">
+                                    <option value="International Cuisine">
+                                    <option value="Desserts">
+                                    <option value="Healthy Meals">
+                                </datalist>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Price*</label>
+                                <input type="number" id="price" name="price" class="form-control" min="0.01" step="0.01" value="<%= mealKit.price %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cookingTime" class="form-label">Cooking Time (minutes)*</label>
+                                <input type="number" id="cookingTime" name="cookingTime" class="form-control" min="1" value="<%= mealKit.cookingTime %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="servings" class="form-label">Servings*</label>
+                                <input type="number" id="servings" name="servings" class="form-control" min="1" value="<%= mealKit.servings %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imageUpload" class="form-label">Image of the meal kit*</label>
+                                <input type="file" id="imageUpload" name="imageUpload" class="form-control" accept=".jpg, .jpeg, .gif, .png" required>
+                                <small class="form-text text-muted">Please upload an image file in JPG, JPEG, GIF, or PNG format.</small>
+                            </div>
+                            <div class="form-check mb-4">
+                                <input type="checkbox" id="featuredMealKit" name="featuredMealKit" class="form-check-input" <% if (mealKit.featuredMealKit) { %> checked <% } %>>
+                                <label class="form-check-label" for="featuredMealKit">Featured Meal Kit</label>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,21 +1,21 @@
 const express = require("express");
-const mealkitUtil = require("../modules/mealkit-util");
+const mealKitUtil = require("../modules/mealkit-util");
 const userModel = require("../models/userModel");
 const bcryptjs = require("bcryptjs");
-const allMealKits = mealkitUtil.getAllMealKits();
+const mealKitModel = require("../models/mealKitModel");
 
 const router = express.Router();
 
 // Route to the home page
 router.get("/", (req, res) =>{
-    const allMealKits = mealkitUtil.getAllMealKits();
-    const mealKitsByCategory = mealkitUtil.getMealKitsByCategory(allMealKits);
 
-    res.render("home", {
-        title : "Culinary Parcel - Home",
-        featuredMealKits : mealkitUtil.getFeaturedMealKits(allMealKits),
-        mealKitsByCategory: mealKitsByCategory
-    });
+        let allMealKits = mealKitUtil.getAllMealKits();
+        res.render("home", {
+            title : "Culinary Parcel - Home",
+            allMealKits: allMealKits,
+            featuredMealKits : mealKitUtil.getFeaturedMealKits(allMealKits),
+            mealKitsByCategory: mealKitUtil.getMealKitsByCategory(allMealKits)
+        });
 });
 
 // Route(get) to sing-up page
@@ -36,63 +36,63 @@ router.get("/sign-up", (req, res) =>{
 router.post("/sign-up", (req, res) =>{
 
     const { firstName, lastName, email, password } = req.body;
-    let validationStatus = {
-        validFirstName: false,
-        validLastName: false,
-        validEmail: false,
-        validPassword: false
+    let statusOfValidation = {
+        isValidFirstName: false,
+        isValidLastName: false,
+        isValidEmail: false,
+        isValidPassword: false
     };      
     let errors = {};
 
     // First Name Validation
     if(typeof firstName !== "string") {
-        validationStatus.validFirstName = false;
-        errors.firstName = "You must enter First Name.";
+        statusOfValidation.isValidFirstName = false;
+        errors.firstName = "please enter First Name.";
     }
     else if (firstName.trim().length === 0) {
-        validationStatus.validFirstName = false;
-        errors.firstName = "The First Name is required."
+        statusOfValidation.isValidFirstName = false;
+        errors.firstName = "First Name is required."
     }
     else {
-        validationStatus.validFirstName = true;
+        statusOfValidation.isValidFirstName = true;
     }
 
     // Email Validation using Regex
     if (!email || typeof email !== "string") {
-        validationStatus.validEmail = false;
-        errors.email = "You must enter an email address.";
+        statusOfValidation.isValidEmail = false;
+        errors.email = "please enter an email address.";
     } 
     else if (email.trim().length === 0) {
-        validationStatus.validEmail = false;
+        statusOfValidation.isValidEmail = false;
         errors.email = "The email address is required.";
     }
     else if (email.indexOf('@') === -1 || email.indexOf('.', email.indexOf('@')) === -1 || email.indexOf(' ') !== -1) {
-        validationStatus.validEmail = false;
+        statusOfValidation.isValidEmail = false;
         errors.email = "Please enter a valid email address.";
     } 
     else {
-        validationStatus.validEmail = true;
+        statusOfValidation.isValidEmail = true;
     }
 
     // Password Validation
     if (!password || typeof password !== "string") {
-        validationStatus.validPassword = false;
-        errors.password = "You must enter a password.";
+        statusOfValidation.isValidPassword = false;
+        errors.password = "please enter a password.";
     } 
     else if (password.length < 8 || password.length > 12) {
-        validationStatus.validPassword = false;
+        statusOfValidation.isValidPassword = false;
         errors.password = "Password must be between 8 and 12 characters.";
     }
     else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password) || !/[^a-zA-Z0-9]/.test(password)) {
-        validationStatus.validPassword = false;
+        statusOfValidation.isValidPassword = false;
         errors.password = "Password must contain at least one lowercase letter, one uppercase letter, one number, and one symbol.";
     } 
     else {
-        validationStatus.validPassword = true;
+        statusOfValidation.isValidPassword = true;
     }
 
     // Check if all validations pass
-    if(validationStatus.validFirstName && validationStatus.validEmail && validationStatus.validPassword) {
+    if(statusOfValidation.isValidFirstName && statusOfValidation.isValidEmail && statusOfValidation.isValidPassword) {
 
         const newUser = new userModel({firstName, lastName, email, password});
 
@@ -106,37 +106,38 @@ router.post("/sign-up", (req, res) =>{
                 from: "krutinpolra@gmail.com",
                 subject: "Welcome to Culinary Parcel!",
                 html: `
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Welcome to Culinary Parcel!</title>
-                    </head>
-                    <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
-
-                        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-
-                            <h2 style="text-align: center; color: #333333;">Welcome to Culinary Parcel!</h2>
-
-                            <p style="font-size: 16px; color: #666666;">Dear ${firstName} ${lastName},</p>
-
-                            <p style="font-size: 16px; color: #666666;">Thank you for registering with Culinary Parcel! We're thrilled to have you on board.</p>
-
-                            <p style="font-size: 16px; color: #666666;">At Culinary Parcel, we provide you with the freshest ingredients and most delicious recipes, delivered right to your doorstep. Get ready to embark on a culinary journey like no other!</p>
-
-                            <p style="font-size: 16px; color: #666666;">Stay tuned for exciting updates, mouth-watering recipes, and exclusive offers.</p>
-
-                            <p style="font-size: 16px; color: #666666;">If you have any questions or need assistance, feel free to reach out to us at <a href="mailto:krutinpolra@gmail.com" style="color: #009688;">krutinpolra@gmail.com</a>.</p>
-
-                            <p style="font-size: 16px; color: #666666;">Happy cooking!</p>
-
-                            <p style="font-size: 16px; color: #666666;">Best regards,<br> The Culinary Parcel Team</p>
-
-                        </div>
-
-                    </body>
-                    </html>
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Welcome to Culinary Parcel!</title>
+                </head>
+                <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+                
+                    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+                
+                        <h2 style="text-align: center; color: #333333;">Welcome to Culinary Parcel, ${firstName}!</h2>
+                
+                        <p style="font-size: 16px; color: #666666;">Get ready to embark on a culinary adventure like no other!</p>
+                
+                        <p style="font-size: 16px; color: #666666;">At Culinary Parcel, we're dedicated to delivering the freshest ingredients and most delicious recipes right to your doorstep.</p>
+                
+                        <p style="font-size: 16px; color: #666666;">We're thrilled to have you join our community of food enthusiasts. Whether you're a seasoned chef or just starting out, there's something for everyone at Culinary Parcel.</p>
+                
+                        <p style="font-size: 16px; color: #666666;">Stay tuned for exciting updates, mouth-watering recipes, and exclusive offers. Plus, be sure to check out our blog for tips and tricks from our expert chefs!</p>
+                
+                        <p style="font-size: 16px; color: #666666;">If you ever have any questions or need assistance, don't hesitate to reach out to us at <a href="mailto:krutinpolra@gmail.com" style="color: #009688;">krutinpolra@gmail.com</a>.</p>
+                
+                        <p style="font-size: 16px; color: #666666;">Enjoy your culinary journey!</p>
+                
+                        <p style="font-size: 16px; color: #666666;">Best regards,<br> The Culinary Parcel Team</p>
+                
+                    </div>
+                
+                </body>
+                </html>
+                
                     `
                 };
 
@@ -148,7 +149,7 @@ router.post("/sign-up", (req, res) =>{
                     })
                     .catch(err => {
                         console.log(err);
-                        errors.sendGrid = "Sorry! email was not sent.";
+                        errors.sendGrid = "Sorry! couldn't send email.";
                     })
             })
             .catch(err => {
@@ -189,43 +190,43 @@ router.get("/log-in", (req, res) => {
 router.post("/log-in", (req, res) => {
     const { email, password, role} = req.body;
     let errors = {};
-    let validationStatus = {
-        validEmail: false,
-        validPassword: false
+    let statusOfValidation = {
+        isValidEmail: false,
+        isValidPassword: false
     }; 
 
     // Email Validation
     if (!email || typeof email !== "string") {
-        validationStatus.validEmail = false;
-        errors.email = "You must enter an email address.";
+        statusOfValidation.isValidEmail = false;
+        errors.email = "please enter an email address.";
     } 
     else if (email.trim().length === 0) {
-        validationStatus.validEmail = false;
+        statusOfValidation.isValidEmail = false;
         errors.email = "The email address is required.";
     }
     else if (email.indexOf('@') === -1 || email.indexOf('.', email.indexOf('@')) === -1 || email.indexOf(' ') !== -1) {
-        validationStatus.validEmail = false;
+        statusOfValidation.isValidEmail = false;
         errors.email = "Please enter a valid email address.";
     } 
     else {
-        validationStatus.validEmail = true;
+        statusOfValidation.isValidEmail = true;
     }
 
     // Password Validation
     if (!password || typeof password !== "string") {
-        validationStatus.validPassword = false;
-        errors.password = "You must enter a password.";
+        statusOfValidation.isValidPassword = false;
+        errors.password = "please enter a password.";
     } 
     else if (password.length === 0) {
-        validationStatus.validPassword = false;
-        errors.password = "You must enter a password.";
+        statusOfValidation.isValidPassword = false;
+        errors.password = "please enter a password.";
     } 
     else {
-        validationStatus.validPassword = true;
+        statusOfValidation.isValidPassword = true;
     }
 
     // Check if all validations pass
-    if(validationStatus.validEmail && validationStatus.validPassword) {
+    if(statusOfValidation.isValidEmail && statusOfValidation.isValidPassword) {
         userModel.findOne({email})
             .then(user => {
                 if(user) {
@@ -236,7 +237,7 @@ router.post("/log-in", (req, res) => {
                                 if (role) {
                                     req.session.role = role;
                                     if(req.session.role === "Data Entry Clerk") {
-                                        res.redirect("/mealkits/list");
+                                        res.redirect("/mealKits/list");
                                     }
                                     else if(req.session.role === "Customer") {
                                         res.redirect("/cart");

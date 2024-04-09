@@ -17,16 +17,14 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const mealKitUtil = require('./modules/mealkit-util');
 const session = require("express-session");
+const mongoose = require("mongoose");
+const fileUpload = require("express-fileupload");
 
 //set-up dotenv
 const dotenv = require("dotenv");
-const { default: mongoose } = require("mongoose");
 dotenv.config({path: "./config/keys.env"})
 
-//set up EJS
-app.set("view engine", "ejs");
-app.set("layout", "layouts/main");
-app.use(expressLayouts);
+const allMealKits = mealKitUtil.getAllMealKits();
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -37,37 +35,36 @@ app.use(session({
 app.use((req, res, next) => {
     //save the use to the global variable for user;
     res.locals.user = req.session.user;
+    res.locals.role = req.session.role;
     next();
 })
+
+//set up EJS
+app.set("view engine", "ejs");
+app.set("layout", "layouts/main");
+app.use(expressLayouts);
+
 //set-up body-parser
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 
 //Make the "assets" folder public (aka static)
 app.use(express.static(path.join(__dirname, "/assets")));
 
+//use file upload 
+app.use(fileUpload());
+
 const generalController = require('./controllers/generalController');
 const mealKitsController = require("./controllers/mealKitsController");
+const loadDataController = require("./controllers/loadDataController");
 
 // Add your routes here
 // e.g. app.get() { ... }
 app.use("/", generalController);
 app.use("/mealKitsController/", mealKitsController);
+app.use("/loadDataController/", loadDataController)
 
-app.get("/on-the-menu", (req, res) => {
-        // Retrieve meal kits by category
-        const mealKitsByCategory = mealKitUtil.getMealKitsByCategory(mealKitUtil.getAllMealKits());
-        // Pass meal kits by category data to the template
-        res.render("on-the-menu", { categories: mealKitsByCategory });
-});
-
-app.get("/welcome", (req, res) => {
-    res.render("/welcome");
-});
-
-app.get("/headers", (req, res) => {
-
-    const headers = req.headers;
-    res.json(headers);
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname))
 });
 
 // This use() will not allow requests to go beyond it
