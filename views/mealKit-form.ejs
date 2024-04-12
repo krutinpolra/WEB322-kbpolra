@@ -1,59 +1,60 @@
-<section class="meal-kit-section" style="background-color: #f8f9fa;">
-  <div class="container">
-      <div class="row justify-content-center">
-          <div class="col-md-8">
-              <div class="meal-kit-card shadow-sm p-4 rounded">
-                  <h2 class="text-center mb-4">Add New Meal Kit</h2>
-                  <form method="post" action="/mealkits/add" enctype="multipart/form-data">
-                      <div class="mb-3">
-                          <label for="title" class="form-label">Meal Kit Title*</label>
-                          <input type="text" id="title" name="title" class="form-control" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="includes" class="form-label">What does it include?*</label>
-                          <input type="text" id="includes" name="includes" class="form-control" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="description" class="form-label">Description of your meal kit*</label>
-                          <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-                      </div>
-                      <div class="mb-3">
-                          <label for="category" class="form-label">Category*</label>
-                          <input type="text" id="category" name="category" class="form-control" list="categorySuggestions" autocomplete="off" required>
-                          <datalist id="categorySuggestions">
-                              <option value="Vegan Meals">
-                              <option value="International Cuisine">
-                              <option value="Desserts">
-                              <option value="Healthy Meals">
-                          </datalist>
-                      </div>
-                      <div class="mb-3">
-                          <label for="price" class="form-label">Price*</label>
-                          <input type="number" id="price" name="price" class="form-control" min="0.01" step="0.01" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="cookingTime" class="form-label">Cooking Time (minutes)*</label>
-                          <input type="number" id="cookingTime" name="cookingTime" class="form-control" min="1" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="servings" class="form-label">Servings*</label>
-                          <input type="number" id="servings" name="servings" class="form-control" min="1" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="imageUpload" class="form-label">Image of the Mealkit*</label>
-                          <input type="file" id="imageUpload" name="imageUpload" class="form-control" accept=".jpg, .jpeg, .gif, .png" required>
-                          <small class="form-text text-muted">Please upload an image file in JPG, JPEG, GIF, or PNG format.</small>
-                      </div>
-                      <div class="form-check mb-4">
-                          <input type="checkbox" id="featuredMealKit" name="featuredMealKit" class="form-check-input">
-                          <label class="form-check-label" for="featuredMealKit">Featured Meal Kit</label>
-                      </div>
-                      <div class="text-center">
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                      </div>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
+<section class="meal-kit-section" style="background-color: antiquewhite;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form_area shadow-sm p-4 rounded">
+                    <h2 class="title text-center mb-4">Add New Meal Kit</h2>
+                    <form method="post" action="/mealkitsController/add" enctype="multipart/form-data">
+                        <div class="form_group mb-3">
+                            <label for="title" class="sub_title">Meal Kit Title*</label>
+                            <input type="text" id="title" name="title" class="form_style form-control" required>
+                        </div>
+                        <div class="form_group mb-3">
+                            <label for="includes" class="sub_title">What does it include?*</label>
+                            <input type="text" id="includes" name="includes" class="form_style form-control" required>
+                        </div>
+                        <div class="form_group mb-3">
+                            <label for="description" class="sub_title">Description of your meal kit*</label>
+                            <textarea class="form_style form-control" id="description" name="description" rows="3" required></textarea>
+                        </div>
+                        <div class="form_group mb-3">
+                            <label for="category" class="sub_title">Category*</label>
+                            <input type="text" id="category" name="category" class="form_style form-control" list="categorySuggestions" autocomplete="off" required>
+                            <datalist id="categorySuggestions">
+                                <option value="Vegan Meals">
+                                <option value="International Cuisine">
+                                <option value="Desserts">
+                                <option value="Healthy Meals">
+                            </datalist>
+                        </div>
+                        <div class="form_group mb-3">
+                            <label for="price" class="sub_title">Price*</label>
+                            <input type="number" id="price" name="price" class="form_style form-control" min="0.01" step="0.01" required>
+                        </div>
+                        <div class="form_group mb-3">
+                            <label for="cookingTime" class="sub_title">Cooking Time (minutes)*</label>
+                            <input type="number" id="cookingTime" name="cookingTime" class="form_style form-control" min="1" required>
+                        </div>
+                        <div class="form_group mb-3">
+                            <label for="servings" class="sub_title">Servings*</label>
+                            <input type="number" id="servings" name="servings" class="form_style form-control" min="1" required>
+                        </div>
+                        <div class="form_group mb-3">
+                            <label for="imageUpload" class="sub_title">Image of the Mealkit*</label>
+                            <input type="file" id="imageUpload" name="imageUpload" class="form_style form-control" accept=".jpg, .jpeg, .gif, .png" required>
+                            <small class="form-text text-muted" style="color: white">Please upload an image file in JPG, JPEG, GIF, or PNG format.</small>
+                        </div>
+                        <div class="form_group form-check mb-4">
+                            <input type="checkbox" id="featuredMealKit" name="featuredMealKit" class="form-check-input">
+                            <label class="form-check-label" for="featuredMealKit">Featured Meal Kit</label>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="sign-up-btn btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  

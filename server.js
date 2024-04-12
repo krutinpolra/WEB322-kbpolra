@@ -45,7 +45,7 @@ app.set("layout", "layouts/main");
 app.use(expressLayouts);
 
 //set-up body-parser
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: false}));
 
 //Make the "assets" folder public (aka static)
 app.use(express.static(path.join(__dirname, "/assets")));
@@ -53,7 +53,7 @@ app.use(express.static(path.join(__dirname, "/assets")));
 //use file upload 
 app.use(fileUpload());
 
-const generalController = require('./controllers/generalController');
+const generalController = require("./controllers/generalController");
 const mealKitsController = require("./controllers/mealKitsController");
 const loadDataController = require("./controllers/loadDataController");
 

@@ -6,17 +6,38 @@ const mealKitModel = require("../models/mealKitModel");
 
 const router = express.Router();
 
-// Route to the home page
 router.get("/", (req, res) =>{
-
-        let allMealKits = mealKitUtil.getAllMealKits();
+    let allMealKits = mealKitUtil.getAllMealKits();
+    let user = req.session.user; // Assuming the user object is stored in the session
+    if (user) {
+        // Fetch the user's meal kits from the database
+        userModel.findById(user._id)
+            .then(user => {
+                // Pass the user's meal kits to the template
+                res.render("home", {
+                    title: "Culinary Parcel - Home",
+                    allMealKits: allMealKits,
+                    featuredMealKits: mealKitUtil.getFeaturedMealKits(allMealKits),
+                    mealKitsByCategory: mealKitUtil.getMealKitsByCategory(allMealKits),
+                    user: user // Pass the user object to the template
+                });
+            })
+            .catch(err => {
+                // Handle error
+                console.error("Error fetching user's meal kits:", err);
+                res.status(500).send("Internal Server Error");
+            });
+    } else {
+        // If user is not logged in, render the home page without user meal kits
         res.render("home", {
-            title : "Culinary Parcel - Home",
+            title: "Culinary Parcel - Home",
             allMealKits: allMealKits,
-            featuredMealKits : mealKitUtil.getFeaturedMealKits(allMealKits),
+            featuredMealKits: mealKitUtil.getFeaturedMealKits(allMealKits),
             mealKitsByCategory: mealKitUtil.getMealKitsByCategory(allMealKits)
         });
+    }
 });
+
 
 // Route(get) to sing-up page
 router.get("/sign-up", (req, res) =>{
@@ -32,7 +53,7 @@ router.get("/sign-up", (req, res) =>{
     });
 });
 
-// Route(post) to sing-up page
+// Route(post) to sign-up page
 router.post("/sign-up", (req, res) =>{
 
     const { firstName, lastName, email, password } = req.body;
@@ -90,89 +111,108 @@ router.post("/sign-up", (req, res) =>{
     else {
         statusOfValidation.isValidPassword = true;
     }
-
+    
     // Check if all validations pass
-    if(statusOfValidation.isValidFirstName && statusOfValidation.isValidEmail && statusOfValidation.isValidPassword) {
+    if (statusOfValidation.isValidFirstName && statusOfValidation.isValidEmail && statusOfValidation.isValidPassword) {
 
-        const newUser = new userModel({firstName, lastName, email, password});
+        const newUser = new userModel({ firstName, lastName, email, password });
 
-        newUser.save()
-            .then(userSaved => {
-                const sgMail = require("@sendgrid/mail");
-                sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-
-                const msg = {
-                to: email,
-                from: "krutinpolra@gmail.com",
-                subject: "Welcome to Culinary Parcel!",
-                html: `
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Welcome to Culinary Parcel!</title>
-                </head>
-                <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
-                
-                    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-                
-                        <h2 style="text-align: center; color: #333333;">Welcome to Culinary Parcel, ${firstName}!</h2>
-                
-                        <p style="font-size: 16px; color: #666666;">Get ready to embark on a culinary adventure like no other!</p>
-                
-                        <p style="font-size: 16px; color: #666666;">At Culinary Parcel, we're dedicated to delivering the freshest ingredients and most delicious recipes right to your doorstep.</p>
-                
-                        <p style="font-size: 16px; color: #666666;">We're thrilled to have you join our community of food enthusiasts. Whether you're a seasoned chef or just starting out, there's something for everyone at Culinary Parcel.</p>
-                
-                        <p style="font-size: 16px; color: #666666;">Stay tuned for exciting updates, mouth-watering recipes, and exclusive offers. Plus, be sure to check out our blog for tips and tricks from our expert chefs!</p>
-                
-                        <p style="font-size: 16px; color: #666666;">If you ever have any questions or need assistance, don't hesitate to reach out to us at <a href="mailto:krutinpolra@gmail.com" style="color: #009688;">krutinpolra@gmail.com</a>.</p>
-                
-                        <p style="font-size: 16px; color: #666666;">Enjoy your culinary journey!</p>
-                
-                        <p style="font-size: 16px; color: #666666;">Best regards,<br> The Culinary Parcel Team</p>
-                
-                    </div>
-                
-                </body>
-                </html>
-                
-                    `
-                };
-
-                sgMail.send(msg)
-                    .then(() => {
-                        res.render("welcome", {
-                            title: "Culinary Parcel - Welcome Page"
-                        })
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        errors.sendGrid = "Sorry! couldn't send email.";
-                    })
-            })
-            .catch(err => {
-                if (err.code === 11000 && err.keyPattern.email) {
+        userModel.findOne({ email: email })
+            .then(existingUser => {
+                if (existingUser) {
+                    // If the user already exists, set an error message and render the sign-up page again
                     errors.email = "Email already exists!";
-                } else {
-                    // Handle other errors
                     res.render("sign-up", {
-                        title : "Culinary Parcel - Sign-up",
+                        title: "Culinary Parcel - Sign-up",
                         values: req.body,
-                        errors 
+                        errors: errors
                     });
+                } else {
+                    newUser.save()
+                        .then(() => {
+
+                            const sgMail = require("@sendgrid/mail");
+                            sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+
+                            const msg = {
+                                to: email,
+                                from: "krutinpolra@gmail.com",
+                                subject: "Welcome to Culinary Parcel!",
+                                html: `
+                                <!DOCTYPE html>
+                                <html lang="en">
+                                    <head>
+                                    <meta charset="UTF-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                    <title>Welcome to Culinary Parcel!</title>
+                                </head>
+                                <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+
+                                    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+
+                                    <h2 style="text-align: center; color: #333333;">Welcome to Culinary Parcel, ${firstName}!</h2>
+
+                                    <p style="font-size: 16px; color: #666666;">Get ready to embark on a culinary adventure like no other!</p>
+
+                                    <p style="font-size: 16px; color: #666666;">At Culinary Parcel, we're dedicated to delivering the freshest ingredients and most delicious recipes right to your doorstep.</p>
+
+                                    <p style="font-size: 16px; color: #666666;">We're thrilled to have you join our community of food enthusiasts. Whether you're a seasoned chef or just starting out, there's something for everyone at Culinary Parcel.</p>
+
+                                    <p style="font-size: 16px; color: #666666;">Stay tuned for exciting updates, mouth-watering recipes, and exclusive offers. Plus, be sure to check out our blog for tips and tricks from our expert chefs!</p>
+
+                                    <p style="font-size: 16px; color: #666666;">If you ever have any questions or need assistance, don't hesitate to reach out to us at <a href="mailto:krutinpolra@gmail.com" style="color: #009688;">krutinpolra@gmail.com</a>.</p>
+
+                                    <p style="font-size: 16px; color: #666666;">Enjoy your culinary journey!</p>
+
+                                    <p style="font-size: 16px; color: #666666;">Best regards,<br> The Culinary Parcel Team</p>
+
+                                </div>
+
+                            </body>
+                            </html>
+                            `
+                            };
+
+                            sgMail.send(msg)
+                                .then(() => {
+                                    res.render("welcome", {
+                                        title: "Culinary Parcel - Welcome Page"
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                    errors.sendGrid = "Sorry! couldn't send email.";
+                                });
+                        })
+                        .catch(err => {
+                            if (err.code === 11000 && err.keyPattern.email) {
+                                errors.email = "Email already exists!";
+                            } else {
+                                // Handle other errors
+                                res.render("sign-up", {
+                                    title: "Culinary Parcel - Sign-up",
+                                    values: req.body,
+                                    errors
+                                });
+                            }
+                        });
                 }
             })
-    } 
-    else {
+            .catch(err => {
+                console.error("Error checking existing user:", err);
+                res.status(500).send("Internal Server Error");
+            });
+    } else {
         res.render("sign-up", {
-            title : "Culinary Parcel - Sign-up",
+            title: "Culinary Parcel - Sign-up",
             values: req.body,
-            errors 
+            errors
         });
     }
 });
+
+
+
 
 // Route(get) to log-in page
 router.get("/log-in", (req, res) => {
@@ -225,26 +265,30 @@ router.post("/log-in", (req, res) => {
         statusOfValidation.isValidPassword = true;
     }
 
+    
     // Check if all validations pass
     if(statusOfValidation.isValidEmail && statusOfValidation.isValidPassword) {
+        
         userModel.findOne({email})
             .then(user => {
+                
                 if(user) {
                     bcryptjs.compare(password, user.password)
                         .then(matched => {
                             if (matched) {
+                                
                                 req.session.user = user;
                                 if (role) {
                                     req.session.role = role;
-                                    if(req.session.role === "Data Entry Clerk") {
-                                        res.redirect("/mealKits/list");
+                                    if(req.session.role === "data entry clerk") {
+                                        res.redirect("/mealKitsController/list");
                                     }
-                                    else if(req.session.role === "Customer") {
+                                    else {
                                         res.redirect("/cart");
                                     }
                                 }
                                 else {
-                                    req.session.role = "Data Entry Clerk";
+                                    req.session.role = "data entry clerk";
                                     res.redirect("/cart");
                                 }
                             }
@@ -304,7 +348,7 @@ router.get("/about", (req, res) => {
 
 router.get("/cart", (req, res) => {
     if(req.session) {
-        if(req.session.role === "Customer") {
+        if(req.session.role === "customer") {
             res.render("cart", {
                 title: "Culinary Parcel - cart",
                 user: req.session.user,

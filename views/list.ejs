@@ -1,4 +1,4 @@
-<section class="h-100 py-5 welcome-container">
+<!-- <section class="h-100 py-5 welcome-container">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-10 col-lg-6 col-xl-5">
@@ -11,4 +11,53 @@
         </div>
       </div>
     </div>
+</section> -->
+<!-- list.ejs -->
+
+<section class="Meal-kits">
+  <% allMealKits.forEach(mealKit => { %>
+      <div class="container">
+          <h2 class="categoryName text-center mb-4 display-4"><%= mealKit.category %></h2>
+          <div class="row justify-content-center">
+              <div class="col-12 col-md-10">
+                  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4 justify-content-center">
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
+                          <div class="flip-card p-8">
+                              <div class="flip-card-inner">
+                                  <div class="flip-card-front">
+                                      <img src="<%= mealKit.imageUrl %>" class="card-img-top" alt="<%= mealKit.title %>">
+                                      <div class="card-body">
+                                          <h5 class="card-title"><%= mealKit.title %></h5>
+                                          <p class="price">$<%= mealKit.price.toFixed(2) %></p>
+                                          <p class="includes"><strong>Includes:</strong> <%= mealKit.includes %></p>
+                                          <p class="cookingTime"><strong>Cooking Time:</strong> <%= mealKit.cookingTime %> minutes</p>
+                                          <p class="servings"><strong>Servings:</strong> <%= mealKit.servings %></p>
+                                      </div>
+                                  </div>
+                                  <div class="flip-card-back">
+                                      <div class="card-body">
+                                          <p class="card-description"><%= mealKit.description %></p>
+                                          <p class="category">Category: <%= mealKit.category %></p>
+                                      </div>
+                                      <!-- Section to add meal kits -->
+                                      <section class="Add-meal-kit">
+                                            <div class="container">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-8">
+                                                        <div class="text-center">
+                                                            <a href="/mealKitsController/add" class="btn btn-primary">Add New Meal Kit</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  <% }); %>
 </section>

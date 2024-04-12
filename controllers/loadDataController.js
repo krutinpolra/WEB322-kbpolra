@@ -6,7 +6,7 @@ const allMealKits = mealKitUtil.getAllMealKits();
 const router = express.Router();
 
 router.get("/mealKits", (req, res) => {
-    if (req.session && req.session.user && req.session.role === "Data Entry Clerk") {
+    if (req.session && req.session.user && req.session.role === "data entry clerk") {
         mealKitModel.countDocuments()
             .then(tempCount => {
                 if (tempCount === 0) {

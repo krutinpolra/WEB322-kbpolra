@@ -30,13 +30,6 @@
             
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               
-                    <li class="nav-item">
-                        <button class="button" data-text="Awesome" onclick="window.location.href='/mealKitsController/'">
-                            <span class="actual-text">&nbsp;Menu&nbsp;</span>
-                            <span aria-hidden="true" class="hover-text">&nbsp;Menu&nbsp;</span>
-                        </button>
-                    </li>
-              
               
                     <li class="nav-item">
                         <button class="button" data-text="Awesome" onclick="window.location.href='/about'">
@@ -45,6 +38,12 @@
                         </button>
                     </li>
                     <% if (typeof user === "undefined") { %>
+                        <li class="nav-item">
+                            <button class="button" data-text="Awesome" onclick="window.location.href='/mealKitsController/list'">
+                                <span class="actual-text">&nbsp;Menu&nbsp;</span>
+                                <span aria-hidden="true" class="hover-text">&nbsp;Menu&nbsp;</span>
+                            </button>
+                        </li>
                         <li class="nav-item">
                             <button class="button" data-text="Awesome" onclick="window.location.href='/log-in'">
                                 <span class="actual-text">&nbsp;LogIn&nbsp;</span>
@@ -60,10 +59,14 @@
                         </li>
                     <% } else { %>
                         <li class="nav-item">
-                            <% if (locals.role === "Data Entry Clerk") { %>
-                                <button class="button" data-text="Awesome" onclick="window.location.href='/mealKits/list'">
+                            <% if (locals.role === "data entry clerk") { %>
+                                <button class="button" data-text="Awesome" onclick="window.location.href='/mealKitsController/list'">
                                     <span class="actual-text">&nbsp;<%= user.firstName %>&nbsp;</span>
                                     <span aria-hidden="true" class="hover-text">&nbsp;<%= user.firstName %>&nbsp;</span>
+                                </button>
+                                <button class="button" data-text="Awesome" onclick="window.location.href='/mealKitsController/add'">
+                                    <span class="actual-text">&nbsp;ADDMEALKIT&nbsp;</span>
+                                    <span aria-hidden="true" class="hover-text">&nbsp;ADDMEALKIT&nbsp;</span>
                                 </button>
                             <% } else {%>
                             <button class="button" data-text="Awesome" onclick="window.location.href='/cart'">

@@ -1,18 +1,33 @@
 const express = require("express");
 const mealKitUtil = require("../modules/mealkit-util");
-const allMealKits = mealKitUtil.getAllMealKits();
+const mealKitModel = require("../models/mealKitModel");
+const path = require("path");
+const fs = require('fs');
+const { title } = require("process");
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-        // Retrieve meal kits by category
-        const mealKitsByCategory = mealKitUtil.getMealKitsByCategory(mealKitUtil.getAllMealKits());
-        // Pass meal kits by category data to the template
-        res.render("on-the-menu", { categories: mealKitsByCategory });
+    mealKitModel.find().sort({title: 1})
+    .then(data => {
+        let mealKits = data.map(value => value.toObject());
+        res.render("on-the-menu",{
+            title: "Culinary parcel - On-th-menu",
+            mealKitsByCategory : mealKitUtil.getMealKitsByCategory(mealKits),
+            categories: categories
+        });
+    })
+    .catch(() => {
+        res.render("common-errors", {title: "error-page", errMessage: "Did not find any mealkits to show in databse, You can log-in as a data clerk to add the kits"});
+    })
+        // // Retrieve meal kits by category
+        // const mealKitsByCategory = mealKitUtil.getMealKitsByCategory(mealKitUtil.getAllMealKits());
+        // // Pass meal kits by category data to the template
+        // res.render("on-the-menu", { categories: mealKitsByCategory });
 });
 
 router.get("/list", (req, res) => {
-    if(req.session && req.session.user && req.session.role === "Data Entry Clerk") {
+    if(req.session && req.session.user && req.session.role === "data entry clerk") {
         mealKitModel.find().sort({title: 1})
             .then(data => {
                 let mealKits = data.map(value => value.toObject());
@@ -31,7 +46,7 @@ router.get("/list", (req, res) => {
 });
 
 router.get("/add", (req, res) => {
-    if(req.session && req.session.user && req.session.role === "Data Entry Clerk") {
+    if(req.session && req.session.user && req.session.role === "data entry clerk") {
         res.render("mealKit-form", {
            title: "Culinary Parcel - form" 
         });
@@ -42,7 +57,7 @@ router.get("/add", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
-    if(req.session && req.session.user && req.session.role === "Data Entry Clerk") {
+    if(req.session && req.session.user && req.session.role === "data entry clerk") {
 
         const { title, includes, description, category, price, cookingTime, servings} = req.body;
         const featuredMealKit = req.body.featuredMealKit === 'on';
@@ -66,7 +81,7 @@ router.post("/add", (req, res) => {
                             imageUrl: `/images/${ImageAlt}` 
                         })
                             .then(() => {
-                                res.redirect("/mealKits/list");
+                                res.redirect("/mealKitsController/list");
                             })
                             .catch(err => {
                                 res.render("common-errors", {title: "error-page", errMessage: "Couldn't update the URL of the image in database."});
@@ -87,7 +102,7 @@ router.post("/add", (req, res) => {
 });
 
 router.get("/edit/:id" ,(req, res) => {
-    if(req.session && req.session.user && req.session.role === "Data Entry Clerk") {
+    if(req.session && req.session.user && req.session.role === "data entry clerk") {
         const mealKitId = req.params.id;
 
         mealKitModel.findById(mealKitId)
@@ -104,7 +119,7 @@ router.get("/edit/:id" ,(req, res) => {
 });
 
 router.post("/edit/:id", (req, res) => {
-    if(req.session && req.session.user && req.session.role === "Data Entry Clerk") {
+    if(req.session && req.session.user && req.session.role === "data entry clerk") {
         const mealKitId = req.params.id;
         const { title, includes, description, category, price, cookingTime, servings} = req.body;
         const featuredMealKit = req.body.featuredMealKit === 'on';
@@ -135,7 +150,7 @@ router.post("/edit/:id", (req, res) => {
                         })  
                         .then(() => {
                             
-                            res.redirect("/mealKits/list");
+                            res.redirect("/mealKitsController/list");
                         })
                         .catch(err => {
                             
@@ -162,12 +177,12 @@ router.post("/edit/:id", (req, res) => {
                             price: price,
                             cookingTime: cookingTime,
                             servings: servings,
-                            imageUrl: `/images/cards/${ImageAlt}`,
+                            imageUrl: `/images/${ImageAlt}`,
                             featuredMealKit: featuredMealKit
                         })  
                         .then(() => {
                             
-                            res.redirect("/mealKits/list");
+                            res.redirect("/mealKitsController/list");
                         })
                         .catch(err => {
                             
@@ -186,7 +201,7 @@ router.post("/edit/:id", (req, res) => {
 });
 
 router.get("/delete/:id" ,(req, res) => {
-    if(req.session && req.session.user && req.session.role === "Data Entry Clerk") {
+    if(req.session && req.session.user && req.session.role === "data entry clerk") {
         const mealKitId = req.params.id;
         res.render("confirmation", {title: "Culinary Parcel - Confirmation", mealKitId: mealKitId});
     }
@@ -196,7 +211,7 @@ router.get("/delete/:id" ,(req, res) => {
 });
 
 router.post("/delete/:id", (req, res) => {
-    if(req.session && req.session.user && req.session.role === "Data Entry Clerk") {
+    if(req.session && req.session.user && req.session.role === "data entry clerk") {
         const mealKitId = req.params.id;
 
         
@@ -216,10 +231,10 @@ router.post("/delete/:id", (req, res) => {
                         fs.unlink(imagePath, (err) => {
                             if (err) {
                                 console.error("Error deleting meal kit image:", err);
-                                res.redirect("/mealKits/list");
+                                res.redirect("/mealKitsController/list");
                             }
                             else {
-                                res.redirect("/mealKits/list");
+                                res.redirect("/mealKitsController/list");
                             }
                         });
                     })
