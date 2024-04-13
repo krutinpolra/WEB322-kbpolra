@@ -39,7 +39,7 @@
                     </li>
                     <% if (typeof user === "undefined") { %>
                         <li class="nav-item">
-                            <button class="button" data-text="Awesome" onclick="window.location.href='/mealKitsController/list'">
+                            <button class="button" data-text="Awesome" onclick="window.location.href='/on-the-menu'">
                                 <span class="actual-text">&nbsp;Menu&nbsp;</span>
                                 <span aria-hidden="true" class="hover-text">&nbsp;Menu&nbsp;</span>
                             </button>
@@ -68,10 +68,14 @@
                                     <span class="actual-text">&nbsp;ADDMEALKIT&nbsp;</span>
                                     <span aria-hidden="true" class="hover-text">&nbsp;ADDMEALKIT&nbsp;</span>
                                 </button>
-                            <% } else {%>
+                            <% } else if (locals.role === "customer")  {%>
                             <button class="button" data-text="Awesome" onclick="window.location.href='/cart'">
                                 <span class="actual-text">&nbsp;<%= user.firstName %>&nbsp;</span>
                                 <span aria-hidden="true" class="hover-text">&nbsp;<%= user.firstName %>&nbsp;</span>
+                            </button>
+                            <button class="button" data-text="Awesome" onclick="window.location.href='/on-the-menu'">
+                                <span class="actual-text">&nbsp;Menu&nbsp;</span>
+                                <span aria-hidden="true" class="hover-text">&nbsp;Menu&nbsp;</span>
                             </button>
                             <% } %>
                         </li>

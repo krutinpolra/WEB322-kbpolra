@@ -87,7 +87,22 @@
     </div>
             
 </section>
-
-<%- include('partials/meal-kits.ejs', { mealKitsByCategory: mealKitsByCategory }) %>
+<div class="container-sm py-5 px-3">
+    <div class="row justify-content-center g-5">
+        <% if(typeof featuredMealKits !== "undefined" && featuredMealKits.length > 0) { %>
+               <%- include("partials/meal-kits", { mealKitsByCategory: mealKitsByCategory })  %>                         
+        <% } else { %>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-warning text-center" role="alert">
+                            <strong>Sorry!</strong> No featured meal kits today.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
 
 

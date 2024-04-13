@@ -7,36 +7,24 @@ const mealKitModel = require("../models/mealKitModel");
 const router = express.Router();
 
 router.get("/", (req, res) =>{
-    let allMealKits = mealKitUtil.getAllMealKits();
-    let user = req.session.user; // Assuming the user object is stored in the session
-    if (user) {
-        // Fetch the user's meal kits from the database
-        userModel.findById(user._id)
-            .then(user => {
-                // Pass the user's meal kits to the template
+    mealKitModel.find().sort({title: 1})
+            .then(data => {
+                let mealKits = data.map(value => value.toObject());
                 res.render("home", {
-                    title: "Culinary Parcel - Home",
-                    allMealKits: allMealKits,
-                    featuredMealKits: mealKitUtil.getFeaturedMealKits(allMealKits),
-                    mealKitsByCategory: mealKitUtil.getMealKitsByCategory(allMealKits),
-                    user: user // Pass the user object to the template
+                    title : "Culinary Parcel - Home",
+                    featuredMealKits : mealKitUtil.getFeaturedMealKits(mealKits),
+                    mealKitsByCategory: mealKitUtil.getMealKitsByCategory(mealKits) // Pass mealKitsByCategory here
                 });
             })
-            .catch(err => {
-                // Handle error
-                console.error("Error fetching user's meal kits:", err);
-                res.status(500).send("Internal Server Error");
-            });
-    } else {
-        // If user is not logged in, render the home page without user meal kits
-        res.render("home", {
-            title: "Culinary Parcel - Home",
-            allMealKits: allMealKits,
-            featuredMealKits: mealKitUtil.getFeaturedMealKits(allMealKits),
-            mealKitsByCategory: mealKitUtil.getMealKitsByCategory(allMealKits)
-        });
-    }
+            .catch(() => {
+                res.render("home", {
+                    title: "Culinary Parcel - Home",
+                    featuredMealKits: [], // or pass an empty array if no data is available
+                    mealKitsByCategory: [] // or pass an empty array if no data is available
+                });
+            })
 });
+
 
 
 // Route(get) to sing-up page
@@ -347,21 +335,31 @@ router.get("/about", (req, res) => {
 });
 
 router.get("/cart", (req, res) => {
-    if(req.session) {
-        if(req.session.role === "customer") {
-            res.render("cart", {
-                title: "Culinary Parcel - cart",
-                user: req.session.user,
-                role: req.session.role
+    if (req.session && req.session.role === "customer") {
+        mealKitModel.find()
+            .then(data => {
+                const allMealKits = data.map(value => value.toObject());
+                res.render("cart", {
+                    title: "Culinary Parcel - Cart",
+                    user: req.session.user,
+                    role: req.session.role,
+                    mealKits: allMealKits
+                });
+            })
+            .catch(err => {
+                console.error("Error fetching meal kits:", err);
+                res.status(500).redirect("/error");
             });
-        } 
-        else {
-            res.status(401).redirect("/error");
-        } 
-    }
-    else {
+    } else {
         res.status(401).redirect("/error");
     }
+});
+
+router.get("/on-the-menu", (req, res) => {
+    // Retrieve meal kits by category
+    const mealKitsByCategory = mealKitUtil.getMealKitsByCategory(mealKitUtil.getAllMealKits());
+    // Pass meal kits by category data to the template
+    res.render("on-the-menu", { categories: mealKitsByCategory });
 });
 
 router.get("/error", (req, res) => {

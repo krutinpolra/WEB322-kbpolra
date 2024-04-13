@@ -19,6 +19,7 @@ const mealKitUtil = require('./modules/mealkit-util');
 const session = require("express-session");
 const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
+const nodemailer = require('nodemailer');
 
 //set-up dotenv
 const dotenv = require("dotenv");

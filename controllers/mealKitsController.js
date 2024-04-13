@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     mealKitModel.find().sort({title: 1})
     .then(data => {
         let mealKits = data.map(value => value.toObject());
-        res.render("on-the-menu",{
+        res.render("home",{
             title: "Culinary parcel - On-th-menu",
             mealKitsByCategory : mealKitUtil.getMealKitsByCategory(mealKits),
             categories: categories

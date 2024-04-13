@@ -2,17 +2,15 @@
 <section class="Meal-kits">
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <% if (user && Array.isArray(user.mealKits)){ %>
-                console.log("hello");
-                <% let hasFeaturedMealKits = false; %>
-                <% user.mealKits.forEach((mealKit, index) => { %>
-                    <% if (mealKit.featuredMealKit && mealKit.userId === user._id) { %>
+            <% mealKitsByCategory.forEach((category) => { %>
+                <% category.mealKits.forEach((mealKit, index) => { %>
+                    <% if (mealKit.featuredMealKit) { %>
                         <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
                             <div class="container d-flex justify-content-center align-items-center">
                                 <div class="row">
                                     <div class="col-12 col-md-8 col-lg-10">
                                         <div class="card w-100 h-auto">
-                                            <a href="/mealKitsController/list" class="link-as-text">
+                                            <a href="/on-the-menu" class="link-as-text">
                                                 <img src="<%= mealKit.imageUrl %>" class="card-img-top" alt="<%= mealKit.title %>">
                                                 <div class="card-body">
                                                     <h4 class="card-title"><%= mealKit.title %></h4>
@@ -25,46 +23,9 @@
                                 </div>
                             </div>
                         </div>
-                        <% hasFeaturedMealKits = true; %>
                     <% } %>
                 <% }); %>
-                <% if (!hasFeaturedMealKits) { %>
-                    <div class="carousel-item active">
-                        <div class="container d-flex justify-content-center align-items-center">
-                            <div class="row">
-                                <div class="col-12 col-md-8 col-lg-10">
-                                    <p>No featured meal kits for you.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <% } %>
-            <% } else { %>
-                <% mealKitsByCategory.forEach((category) => { %>
-                    <% category.mealKits.forEach((mealKit, index) => { %>
-                        <% if (mealKit.featuredMealKit) { %>
-                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                <div class="container d-flex justify-content-center align-items-center">
-                                    <div class="row">
-                                        <div class="col-12 col-md-8 col-lg-10">
-                                            <div class="card w-100 h-auto">
-                                                <a href="/mealKitsController/list" class="link-as-text">
-                                                    <img src="<%= mealKit.imageUrl %>" class="card-img-top" alt="<%= mealKit.title %>">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title"><%= mealKit.title %></h4>
-                                                        <p class="card-text"><%= mealKit.description %></p>
-                                                        <p class="price">$<%= mealKit.price.toFixed(2) %></p>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% }); %>
-                <% }); %>
-            <% } %>
+            <% }); %>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
