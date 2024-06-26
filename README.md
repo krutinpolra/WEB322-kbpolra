@@ -10,4 +10,3 @@ Course/Section: WEB322/NEE
 
 ## Project URLs
 GitHub Repo   : https://github.com/krutinpolra/WEB322-kbpolra.git
-Cyclic URL    : https://charming-fly-lab-coat.cyclic.app
